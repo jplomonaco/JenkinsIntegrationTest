@@ -2,8 +2,19 @@ pipeline {
   agent any
   stages {
     stage('Verify') {
-      steps {
-        echo 'Verify stage has begun...'
+      parallel {
+        stage('Model Advisor') {
+          steps {
+            echo 'Running model advisor checks'
+          }
+        }
+
+        stage('Design Verifier') {
+          steps {
+            echo 'Checking model for correct architecture'
+          }
+        }
+
       }
     }
 
@@ -15,19 +26,19 @@ pipeline {
 
     stage('Test') {
       parallel {
-        stage('Test') {
+        stage('Test1') {
           steps {
             echo '"Test" stage has begun...'
           }
         }
 
-        stage('Test1') {
+        stage('Test2') {
           steps {
             echo 'Test1'
           }
         }
 
-        stage('Test2') {
+        stage('Test3') {
           steps {
             echo 'Test2'
             echo 'Hello'
@@ -39,13 +50,13 @@ pipeline {
 
     stage('Package') {
       parallel {
-        stage('Package') {
+        stage('Generate Report') {
           steps {
             echo 'Creating report...'
           }
         }
 
-        stage('Archive') {
+        stage('Store Artifacts') {
           steps {
             echo 'Archiving...'
           }
@@ -54,7 +65,7 @@ pipeline {
       }
     }
 
-    stage('Finish') {
+    stage('Deploy') {
       steps {
         echo 'Complete!'
       }
