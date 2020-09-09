@@ -30,6 +30,7 @@ pipeline {
         stage('Test2') {
           steps {
             echo 'Test2'
+            echo 'Hello'
           }
         }
 
